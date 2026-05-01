@@ -1,31 +1,26 @@
 # Dependencies
 node_modules/
-.pnp
-.pnp.js
 
-# Testing
-coverage/
-
-# Production
-build/
+# Build outputs
+.next/
+server/.next/
 dist/
+server/dist/
+server/src/generated/
 
-# Misc
-.DS_Store
+# Environment
 .env
 .env.local
 .env.*.local
-
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
+server/.env
 
 # Logs
 *.log
 npm-debug.log*
 
 # OS
+.DS_Store
 Thumbs.db
+
+# gstack
 .gstack/

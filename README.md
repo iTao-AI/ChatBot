@@ -4,7 +4,7 @@ A ChatGPT-like conversation system built with Next.js and Express.
 
 ## Features
 
-- Multi-model AI chat (GPT-4, Claude) with streaming SSE responses
+- Multi-model AI chat (DeepSeek, GPT-4, Claude) with streaming SSE responses
 - Conversation management with search and full-text indexing
 - User authentication with JWT + refresh token rotation
 - Usage tracking dashboard with token/cost analytics
@@ -16,66 +16,51 @@ A ChatGPT-like conversation system built with Next.js and Express.
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend | Next.js 15, React 19, TypeScript, Tailwind CSS, Zustand, Recharts |
+| Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS, Zustand, Recharts |
 | Backend | Node.js 20, Express, TypeScript, Zod |
 | Database | PostgreSQL 17, Prisma ORM |
 | Cache | Redis 7 |
-| AI | OpenAI SDK, Anthropic SDK |
+| AI | DeepSeek, OpenAI, Anthropic |
 | Deployment | Docker Compose, Nginx |
 
-## Getting Started
+## Quick Start
 
 ### Prerequisites
 
 - Node.js 20+
 - Docker and Docker Compose
-- OpenAI API key and/or Anthropic API key
+- DeepSeek API key (or OpenAI/Anthropic)
 
 ### Development
 
-1. Clone and install:
 ```bash
+# 1. Install dependencies
 npm install
-```
 
-2. Configure environment:
-```bash
+# 2. Configure environment
 cp .env.example .env
-# Edit .env with your API keys
-```
+# Edit .env: set DEEPSEEK_API_KEY=sk-your-key
 
-3. Start infrastructure:
-```bash
+# 3. Start PostgreSQL and Redis
 docker compose up -d
-```
 
-4. Run database migrations:
-```bash
-cd server && npx prisma migrate dev
-```
+# 4. Run database migrations
+cd server && npx prisma migrate deploy && cd ..
 
-5. Start both servers:
-```bash
+# 5. Start both frontend and backend
 npm run dev
 ```
 
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:3001
-- API docs: http://localhost:3001/api/health
 
-### Testing
-
-```bash
-npm test
-```
-
-### Production Deployment
+### Production
 
 ```bash
 docker compose -f docker-compose.yml up -d
 ```
 
-Or build the production image:
+Or build the Docker image:
 ```bash
 docker build -t chatbot .
 ```
@@ -83,29 +68,46 @@ docker build -t chatbot .
 ## API Endpoints
 
 ### Authentication
-- `POST /api/auth/register` — Create account
-- `POST /api/auth/login` — Sign in
-- `POST /api/auth/refresh` — Refresh access token
-- `POST /api/auth/logout` — Sign out
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/auth/register` | Create account |
+| POST | `/api/auth/login` | Sign in |
+| POST | `/api/auth/refresh` | Refresh access token |
+| POST | `/api/auth/logout` | Sign out |
 
 ### Conversations
-- `POST /api/conversations` — Create conversation
-- `GET /api/conversations` — List (paginated)
-- `GET /api/conversations/search?q=...` — Full-text search
-- `PATCH /api/conversations/:id` — Rename
-- `DELETE /api/conversations/:id` — Delete
-- `GET /api/conversations/:id/messages` — Get messages
-- `POST /api/conversations/:id/messages` — Save message
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/conversations` | Create conversation |
+| GET | `/api/conversations` | List (paginated) |
+| GET | `/api/conversations/search?q=` | Full-text search |
+| PATCH | `/api/conversations/:id` | Rename |
+| DELETE | `/api/conversations/:id` | Delete |
+| GET | `/api/conversations/:id/messages` | Get messages |
 
 ### Chat
-- `POST /api/chat/stream` — SSE streaming chat
-- `GET /api/chat/models` — List available models
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/chat/stream` | SSE streaming chat |
+| GET | `/api/chat/models` | List available models |
+
+### Config
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/config` | List API configs (masked) |
+| POST | `/api/config` | Add/update API key |
+| DELETE | `/api/config/:provider` | Remove API key |
+| PATCH | `/api/config/:provider/toggle` | Enable/disable |
 
 ### Usage
-- `GET /api/usage?range=day|week|month` — Usage statistics
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/usage?range=day|week|month` | Usage statistics |
 
 ### Health
-- `GET /api/health` — Health check
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/health` | Health check |
 
 ## Project Structure
 
@@ -119,9 +121,9 @@ docker build -t chatbot .
 ├── server/              # Express backend
 │   ├── src/
 │   │   ├── middleware/  # Auth, rate limiting
-│   │   ├── providers/   # OpenAI, Anthropic adapters
+│   │   ├── providers/   # DeepSeek, OpenAI, Anthropic adapters
 │   │   ├── routes/      # API route handlers
-│   │   └── services/    # Context management, injection defense
+│   │   └── services/    # Context management, encryption
 │   └── prisma/          # Database schema and migrations
 ├── docker-compose.yml   # PostgreSQL + Redis
 ├── Dockerfile           # Production multi-stage build
@@ -136,6 +138,7 @@ docker build -t chatbot .
 - CORS restricted to frontend origin
 - Helmet.js security headers
 - Rate limiting: 20 req/min per user (chat), 10 req/5min per IP (auth)
+- API keys encrypted with AES-256-CBC in database
 
 ## License
 
