@@ -10,6 +10,7 @@ import authRoutes from './routes/auth';
 import conversationRoutes from './routes/conversations';
 import chatRoutes from './routes/chat';
 import usageRoutes from './routes/usage';
+import configRoutes from './routes/config';
 import { chatRateLimit } from './middleware/rate-limit';
 
 const app = express();
@@ -34,6 +35,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/conversations', conversationRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/usage', usageRoutes);
+app.use('/api/config', configRoutes);
 
 // Health check
 app.get('/api/health', (_req, res) => {

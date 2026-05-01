@@ -57,7 +57,7 @@ router.post('/stream', authMiddleware, async (req: AuthRequest, res) => {
   // Truncate to context window
   const contextMessages = truncateToContextWindow(chatMessages, conversation.systemPrompt, model.id);
 
-  const provider = getProviderForModel(model.id);
+  const provider = await getProviderForModel(model.id);
 
   // Set up SSE headers
   res.setHeader('Content-Type', 'text/event-stream');

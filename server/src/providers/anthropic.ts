@@ -5,8 +5,8 @@ export class AnthropicProvider implements ChatProvider {
   name = 'anthropic';
   private client: Anthropic;
 
-  constructor() {
-    this.client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+  constructor(apiKey?: string) {
+    this.client = new Anthropic({ apiKey: apiKey || process.env.ANTHROPIC_API_KEY });
   }
 
   async chat(messages: ChatMessage[], systemPrompt: string, model: string): Promise<ChatResponse> {
@@ -60,7 +60,7 @@ export class AnthropicProvider implements ChatProvider {
       }
     }
 
-    totalInput = Math.max(0, totalOutput > 0 ? 0 : 0); // Anthropic doesn't report input tokens in streaming
+    totalInput = Math.max(0, totalOutput > 0 ? 0 : 0);
     return { content, model, promptTokens: totalInput, completionTokens: totalOutput, totalTokens: totalInput + totalOutput };
   }
 }

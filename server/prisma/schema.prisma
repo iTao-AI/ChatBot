@@ -79,3 +79,13 @@ model UsageRecord {
   @@index([userId, createdAt])
   @@index([model, createdAt])
 }
+
+model ApiConfig {
+  id        String   @id @default(cuid())
+  provider  String   @unique // "openai" | "anthropic"
+  apiKey    String   // encrypted
+  baseUrl   String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
