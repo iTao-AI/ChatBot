@@ -15,6 +15,7 @@ interface ApiConfig {
 }
 
 const PROVIDER_LABELS: Record<string, string> = {
+  deepseek: 'DeepSeek',
   openai: 'OpenAI',
   anthropic: 'Anthropic',
 };

@@ -24,13 +24,24 @@ async function getProviderInstance(name: string): Promise<ChatProvider | null> {
   // Try database first, then env variable
   let apiKey = await getDbApiKey(name);
   if (!apiKey) {
-    apiKey = name === 'openai' ? process.env.OPENAI_API_KEY : process.env.ANTHROPIC_API_KEY;
+    const envKey = name === 'openai' ? 'OPENAI_API_KEY'
+      : name === 'anthropic' ? 'ANTHROPIC_API_KEY'
+      : `${name.toUpperCase()}_API_KEY`;
+    apiKey = process.env[envKey];
   }
   if (!apiKey) return null;
 
   if (name === 'openai') {
     const { OpenAIProvider } = require('./openai');
-    const instance = new OpenAIProvider(apiKey);
+    const baseURL = process.env.OPENAI_BASE_URL;
+    const instance = new OpenAIProvider(apiKey, baseURL);
+    providerCache[name] = { provider: instance, apiKeyHash: apiKey.slice(-8) };
+    return instance;
+  } else if (name === 'deepseek') {
+    // DeepSeek uses OpenAI-compatible API
+    const { OpenAIProvider } = require('./openai');
+    const baseURL = process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com/v1';
+    const instance = new OpenAIProvider(apiKey, baseURL);
     providerCache[name] = { provider: instance, apiKeyHash: apiKey.slice(-8) };
     return instance;
   } else if (name === 'anthropic') {
@@ -50,7 +61,7 @@ export async function getProviderForModel(modelId: string): Promise<ChatProvider
   }
   const provider = await getProviderInstance(model.provider);
   if (!provider) {
-    throw new Error(`Provider ${model.provider} not configured (missing API key — set via /api/config or OPENAI_API_KEY / ANTHROPIC_API_KEY env var)`);
+    throw new Error(`Provider ${model.provider} not configured (missing API key — set via /api/config or env var)`);
   }
   return provider;
 }

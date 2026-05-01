@@ -5,8 +5,11 @@ export class OpenAIProvider implements ChatProvider {
   name = 'openai';
   private client: OpenAI;
 
-  constructor(apiKey?: string) {
-    this.client = new OpenAI({ apiKey: apiKey || process.env.OPENAI_API_KEY });
+  constructor(apiKey?: string, baseURL?: string) {
+    this.client = new OpenAI({
+      apiKey: apiKey || process.env.OPENAI_API_KEY,
+      ...(baseURL && { baseURL }),
+    });
   }
 
   async chat(messages: ChatMessage[], systemPrompt: string, model: string): Promise<ChatResponse> {

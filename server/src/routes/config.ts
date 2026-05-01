@@ -7,7 +7,7 @@ import { z } from 'zod';
 const router = Router();
 
 const configSchema = z.object({
-  provider: z.enum(['openai', 'anthropic']),
+  provider: z.enum(['openai', 'anthropic', 'deepseek']),
   apiKey: z.string().min(1, 'API key is required'),
   baseUrl: z.string().optional(),
   isActive: z.boolean().default(true),
