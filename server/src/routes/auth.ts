@@ -1,11 +1,14 @@
-import { Router, Response } from 'express';
+import { Router, Response, Request, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
 import { prisma } from '../db';
 import { registerSchema, loginSchema } from '../validators';
+import { authRateLimit } from '../middleware/rate-limit';
 
 const router = Router();
+
+router.use(authRateLimit);
 
 const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET!;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!;

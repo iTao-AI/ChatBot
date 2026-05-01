@@ -34,7 +34,7 @@
 - [x] 3.7 Build frontend sidebar with conversation list (create, delete, rename UI)
 - [x] 3.8 Build frontend message history view with scroll-to-bottom on load
 - [x] 3.9 Implement conversation search: frontend filtering by title + content matching
-- [ ] 3.10 Add PostgreSQL full-text search index (tsvector) on conversation title and message content
+- [x] 3.10 Add PostgreSQL full-text search index (tsvector) on conversation title and message content
 
 ## 4. AI Chat Backend
 
@@ -78,51 +78,51 @@
 ## 7. Model Management
 
 - [x] 7.1 Implement `GET /api/models` endpoint returning available models with metadata
-- [ ] 7.2 Load provider configurations from environment variables on server startup
-- [ ] 7.3 Implement API key encryption/decryption service for database storage
-- [ ] 7.4 Implement admin endpoints for adding/updating/rotating API keys
-- [ ] 7.5 Build frontend settings page with model selection and API key management UI
+- [x] 7.2 Load provider configurations from environment variables on server startup
+- [x] 7.3 Implement API key encryption/decryption service for database storage
+- [x] 7.4 Implement admin endpoints for adding/updating/rotating API keys
+- [x] 7.5 Build frontend settings page with model selection and API key management UI
 
 ## 8. Usage Statistics Dashboard
 
 - [x] 8.1 Implement usage tracking middleware: capture tokens, model, timestamp per request
 - [x] 8.2 Implement `GET /api/usage` endpoint with daily/weekly/monthly aggregation
 - [x] 8.3 Implement PostgreSQL aggregation queries (GROUP BY DATE_TRUNC, SUM for tokens/cost)
-- [ ] 8.4 Build frontend usage dashboard with charts (Recharts): tokens/day, cost, request count
-- [ ] 8.5 Add per-model breakdown in usage dashboard
+- [x] 8.4 Build frontend usage dashboard with charts (Recharts): tokens/day, cost, request count
+- [x] 8.5 Add per-model breakdown in usage dashboard
 
 ## 9. Rate Limiting & Security
 
-- [ ] 9.1 Set up Redis connection and health check
-- [ ] 9.2 Implement per-user chat rate limiter (configurable per-minute and per-day limits)
-- [ ] 9.3 Implement IP-based rate limiter for auth endpoints (10 attempts / 5 min)
-- [ ] 9.4 Add rate limit response headers (`X-RateLimit-*`) to all API responses
-- [ ] 9.5 Implement Redis fallback to in-memory rate limiting when Redis is unavailable
-- [ ] 9.6 Add CORS configuration restricting to frontend origin
-- [ ] 9.7 Add Helmet.js security headers middleware
-- [ ] 9.8 Implement input validation and sanitization on all endpoints
+- [x] 9.1 Set up Redis connection and health check
+- [x] 9.2 Implement per-user chat rate limiter (configurable per-minute and per-day limits)
+- [x] 9.3 Implement IP-based rate limiter for auth endpoints (10 attempts / 5 min)
+- [x] 9.4 Add rate limit response headers (`X-RateLimit-*`) to all API responses
+- [x] 9.5 Implement Redis fallback to in-memory rate limiting when Redis is unavailable
+- [x] 9.6 Add CORS configuration restricting to frontend origin
+- [x] 9.7 Add Helmet.js security headers middleware
+- [x] 9.8 Implement input validation and sanitization on all endpoints
 
 ## 10. Testing
 
-- [ ] 10.1 Configure Vitest in backend (ts-jest or vitest + tsconfig)
-- [ ] 10.2 Write unit tests for auth middleware: valid token, expired token, missing token
-- [ ] 10.3 Write unit tests for provider routing service: known model prefix, unknown model
-- [ ] 10.4 Write unit tests for rate limiter: within limit, over limit, Redis fallback
-- [ ] 10.5 Write integration tests for API endpoints: POST /api/auth/register, POST /api/auth/login, POST /api/chat/stream
-- [ ] 10.6 Configure frontend testing (Vitest + React Testing Library)
-- [ ] 10.7 Write component tests: message rendering (markdown, code, LaTeX), chat input, conversation list
-- [ ] 10.8 Write SSE client test: stream parsing, error handling, reconnection
+- [x] 10.1 Configure Vitest in backend (ts-jest or vitest + tsconfig)
+- [x] 10.2 Write unit tests for auth middleware: valid token, expired token, missing token
+- [x] 10.3 Write unit tests for provider routing service: known model prefix, unknown model
+- [x] 10.4 Write unit tests for rate limiter: within limit, over limit, Redis fallback
+- [x] 10.5 Write integration tests for API endpoints: POST /api/auth/register, POST /api/auth/login, POST /api/chat/stream
+- [x] 10.6 Configure frontend testing (Vitest + React Testing Library)
+- [x] 10.7 Write component tests: message rendering (markdown, code, LaTeX), chat input, conversation list
+- [x] 10.8 Write SSE client test: stream parsing, error handling, reconnection
 
 ## 11. Polish & Deployment
 
-- [ ] 11.1 Add dark mode toggle with CSS variables and localStorage persistence
-- [ ] 11.2 Add responsive design for mobile (sidebar collapses to hamburger menu)
-- [ ] 11.2.1 Add keyboard navigation: tab order, focus visible indicators, Escape to close dialogs
-- [ ] 11.2.2 Add ARIA landmarks and screen reader labels for all interactive elements
-- [ ] 11.2.3 Add color contrast check: all text meets WCAG AA (4.5:1 ratio), touch targets 44px minimum
-- [ ] 11.3 Add error boundaries and user-friendly error messages
-- [ ] 11.4 Write API documentation (OpenAPI/Swagger spec)
-- [ ] 11.5 Configure Nginx reverse proxy for production (SSL, static assets, API proxy)
-- [ ] 11.6 Build Docker production images with multi-stage builds
-- [ ] 11.7 Add health check endpoint (`GET /api/health`)
-- [ ] 11.8 Write README with setup, development, and deployment instructions
+- [x] 11.1 Add dark mode toggle with CSS variables and localStorage persistence
+- [x] 11.2 Add responsive design for mobile (sidebar collapses to hamburger menu)
+- [x] 11.2.1 Add keyboard navigation: tab order, focus visible indicators, Escape to close dialogs
+- [x] 11.2.2 Add ARIA landmarks and screen reader labels for all interactive elements
+- [x] 11.2.3 Add color contrast check: all text meets WCAG AA (4.5:1 ratio), touch targets 44px minimum
+- [x] 11.3 Add error boundaries and user-friendly error messages
+- [x] 11.4 Write API documentation (OpenAPI/Swagger spec)
+- [x] 11.5 Configure Nginx reverse proxy for production (SSL, static assets, API proxy)
+- [x] 11.6 Build Docker production images with multi-stage builds
+- [x] 11.7 Add health check endpoint (`GET /api/health`)
+- [x] 11.8 Write README with setup, development, and deployment instructions
