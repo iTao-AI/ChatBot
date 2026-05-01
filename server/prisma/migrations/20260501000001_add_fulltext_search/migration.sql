@@ -1,11 +1,14 @@
+-- Change searchVector column type from text to tsvector
+ALTER TABLE "Conversation" ALTER COLUMN "searchVector" TYPE tsvector USING to_tsvector('english', COALESCE("searchVector", ''));
+
 -- Add GIN index on searchVector for full-text search
-CREATE INDEX "Conversation_searchVector_idx" ON "Conversation" USING GIN ("searchVector" tsvector_ops);
+CREATE INDEX "Conversation_searchVector_idx" ON "Conversation" USING GIN ("searchVector");
 
 -- Create a function to update searchVector on Conversation changes
 CREATE OR REPLACE FUNCTION update_conversation_search_vector()
 RETURNS TRIGGER AS $$
 BEGIN
-  NEW.searchVector := setweight(to_tsvector('english', NEW.title), 'A');
+  NEW."searchVector" := setweight(to_tsvector('english', COALESCE(NEW.title, '')), 'A');
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

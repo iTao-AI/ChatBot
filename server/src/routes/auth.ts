@@ -63,7 +63,7 @@ router.post('/register', async (req, res) => {
   await storeRefreshToken(user.id, refreshToken, REFRESH_EXPIRES_IN);
 
   res.cookie('refreshToken', refreshJwt, REFRESH_COOKIE_OPTIONS as any);
-  res.status(201).json({ id: user.id, email: user.email });
+  res.status(201).json({ id: user.id, email: user.email, accessToken });
 });
 
 router.post('/login', async (req, res) => {
@@ -83,7 +83,7 @@ router.post('/login', async (req, res) => {
   await storeRefreshToken(user.id, refreshToken, REFRESH_EXPIRES_IN);
 
   res.cookie('refreshToken', refreshJwt, REFRESH_COOKIE_OPTIONS as any);
-  res.json({ id: user.id, email: user.email });
+  res.json({ id: user.id, email: user.email, accessToken });
 });
 
 router.post('/refresh', async (req, res) => {

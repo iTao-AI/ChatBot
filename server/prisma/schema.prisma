@@ -46,7 +46,7 @@ model Conversation {
   updatedAt    DateTime  @updatedAt
 
   messages     Message[]
-  searchVector String?   @db.Text
+  searchVector Unsupported("tsvector")?
 
   @@index([userId, updatedAt])
   // GIN index for full-text search — applied via raw SQL migration
