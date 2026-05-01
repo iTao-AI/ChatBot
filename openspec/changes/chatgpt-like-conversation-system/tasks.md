@@ -18,10 +18,10 @@
 - [x] 2.3.1 Implement refresh token rotation: generate new refresh token on each refresh, invalidate old token, detect replay attacks and revoke entire session
 - [x] 2.4 Implement `/api/auth/logout` endpoint with refresh token invalidation
 - [x] 2.5 Create JWT authentication middleware for protected routes
-- [ ] 2.6 Build frontend login page with form validation
-- [ ] 2.7 Build frontend registration page with form validation
-- [ ] 2.8 Implement frontend auth state management (Zustand store for user + tokens)
-- [ ] 2.9 Add protected route guard in Next.js middleware
+- [x] 2.6 Build frontend login page with form validation
+- [x] 2.7 Build frontend registration page with form validation
+- [x] 2.8 Implement frontend auth state management (Zustand store for user + tokens)
+- [x] 2.9 Add protected route guard in Next.js middleware
 
 ## 3. Conversation Management
 
@@ -31,9 +31,9 @@
 - [x] 3.4 Implement `PATCH /api/conversations/:id` endpoint for renaming
 - [x] 3.5 Implement `GET /api/conversations/:id/messages` endpoint returning chronologically ordered messages
 - [x] 3.6 Implement message save service for persisting user and assistant messages
-- [ ] 3.7 Build frontend sidebar with conversation list (create, delete, rename UI)
-- [ ] 3.8 Build frontend message history view with scroll-to-bottom on load
-- [ ] 3.9 Implement conversation search: frontend filtering by title + content matching
+- [x] 3.7 Build frontend sidebar with conversation list (create, delete, rename UI)
+- [x] 3.8 Build frontend message history view with scroll-to-bottom on load
+- [x] 3.9 Implement conversation search: frontend filtering by title + content matching
 - [ ] 3.10 Add PostgreSQL full-text search index (tsvector) on conversation title and message content
 
 ## 4. AI Chat Backend
@@ -52,28 +52,28 @@
 
 ## 5. Frontend Chat Interface
 
-- [ ] 5.1 Build main chat layout: sidebar (conversation list) + main area (messages + input)
-- [ ] 5.1.1 Define design system tokens: font scale, color palette (light + dark), spacing scale, border radius scale
-- [ ] 5.1.2 Define empty states for all screens: no conversations, no messages, no usage data (with warm copy + CTA button)
-- [ ] 5.1.3 Define loading states: skeleton screens for sidebar, message list, usage charts
-- [ ] 5.1.4 Define error states: API failure, network offline, stream interrupted (with retry action)
-- [ ] 5.1.5 Define guest → registered user flow: anonymous chat, registration prompt on first send, auto-link messages after signup
-- [ ] 5.2 Implement message input area with submit button and Enter-to-send shortcut
-- [ ] 5.3 Build message bubbles with user/assistant avatar and timestamp
-- [ ] 5.4 Implement SSE client using fetch + ReadableStream (not EventSource — EventSource only supports GET, we need POST for message body)
-- [ ] 5.5 Implement typewriter effect with blinking cursor during streaming
-- [ ] 5.6 Implement stream interruption: Stop button with AbortController, graceful SSE teardown, backend request cancellation
-- [ ] 5.7 Implement model selector dropdown in chat header
-- [ ] 5.8 Add loading states: sending indicator, initial stream delay
+- [x] 5.1 Build main chat layout: sidebar (conversation list) + main area (messages + input)
+- [x] 5.1.1 Define design system tokens: font scale, color palette (light + dark), spacing scale, border radius scale
+- [x] 5.1.2 Define empty states for all screens: no conversations, no messages, no usage data (with warm copy + CTA button)
+- [x] 5.1.3 Define loading states: skeleton screens for sidebar, message list, usage charts
+- [x] 5.1.4 Define error states: API failure, network offline, stream interrupted (with retry action)
+- [x] 5.1.5 Define guest → registered user flow: anonymous chat, registration prompt on first send, auto-link messages after signup
+- [x] 5.2 Implement message input area with submit button and Enter-to-send shortcut
+- [x] 5.3 Build message bubbles with user/assistant avatar and timestamp
+- [x] 5.4 Implement SSE client using fetch + ReadableStream (not EventSource — EventSource only supports GET, we need POST for message body)
+- [x] 5.5 Implement typewriter effect with blinking cursor during streaming
+- [x] 5.6 Implement stream interruption: Stop button with AbortController, graceful SSE teardown, backend request cancellation
+- [x] 5.7 Implement model selector dropdown in chat header
+- [x] 5.8 Add loading states: sending indicator, initial stream delay
 
 ## 6. Message Rendering
 
-- [ ] 6.1 Integrate Markdown renderer (react-markdown or remark) for message content
-- [ ] 6.2 Configure syntax highlighting for code blocks (Prism.js or highlight.js)
-- [ ] 6.3 Add copy-to-clipboard button on each code block with "Copied!" feedback
-- [ ] 6.4 Integrate DOMPurify for XSS sanitization of rendered HTML
-- [ ] 6.5 Integrate LaTeX math rendering (KaTeX or react-katex) for `$$...$$` and `$...$` blocks
-- [ ] 6.6 Style message rendering: proper heading sizes, list indentation, table borders
+- [x] 6.1 Integrate Markdown renderer (react-markdown or remark) for message content
+- [x] 6.2 Configure syntax highlighting for code blocks (Prism.js or highlight.js)
+- [x] 6.3 Add copy-to-clipboard button on each code block with "Copied!" feedback
+- [x] 6.4 Integrate DOMPurify for XSS sanitization of rendered HTML
+- [x] 6.5 Integrate LaTeX math rendering (KaTeX or react-katex) for `$$...$$` and `$...$` blocks
+- [x] 6.6 Style message rendering: proper heading sizes, list indentation, table borders
 
 ## 7. Model Management
 
