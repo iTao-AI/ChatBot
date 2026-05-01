@@ -49,7 +49,7 @@ model Conversation {
   searchVector String?   @db.Text
 
   @@index([userId, updatedAt])
-  @@index([searchVector], type: Gin)
+  // GIN index for full-text search — applied via raw SQL migration
 }
 
 model Message {

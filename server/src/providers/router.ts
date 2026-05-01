@@ -1,25 +1,37 @@
 import { ChatProvider } from './types';
-import { OpenAIProvider } from './openai';
-import { AnthropicProvider } from './anthropic';
-import { getModelById } from './registry';
+import { getModelById, getModels } from './registry';
 
-const providers: Record<string, ChatProvider> = {
-  openai: new OpenAIProvider(),
-  anthropic: new AnthropicProvider(),
-};
+const providerCache: Record<string, ChatProvider> = {};
+
+function getProviderInstance(name: string): ChatProvider | null {
+  if (providerCache[name]) return providerCache[name];
+
+  const apiKey = name === 'openai' ? process.env.OPENAI_API_KEY : process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) return null;
+
+  if (name === 'openai') {
+    const { OpenAIProvider } = require('./openai');
+    providerCache[name] = new OpenAIProvider();
+  } else if (name === 'anthropic') {
+    const { AnthropicProvider } = require('./anthropic');
+    providerCache[name] = new AnthropicProvider();
+  }
+
+  return providerCache[name] ?? null;
+}
 
 export function getProviderForModel(modelId: string): ChatProvider {
   const model = getModelById(modelId);
   if (!model) {
-    throw new Error(`Unknown model: ${modelId}. Available: ${getModelById(modelId)?.id ?? 'none'}`);
+    throw new Error(`Unknown model: ${modelId}. Available models: ${getModels().map((m) => m.id).join(', ') || 'none (no API keys configured)'}`);
   }
-  const provider = providers[model.provider];
+  const provider = getProviderInstance(model.provider);
   if (!provider) {
-    throw new Error(`Provider ${model.provider} not configured`);
+    throw new Error(`Provider ${model.provider} not configured (missing API key)`);
   }
   return provider;
 }
 
-export function getProviderByName(name: string): ChatProvider {
-  return providers[name];
+export function getProviderByName(name: string): ChatProvider | null {
+  return getProviderInstance(name);
 }
