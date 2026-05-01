@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  conversations Conversation[]
+  refreshTokens RefreshToken[]
+  usageRecords  UsageRecord[]
+
+  @@index([email])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+}
+
+model Conversation {
+  id           String    @id @default(cuid())
+  userId       String?
+  user         User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  title        String    @default("New Conversation")
+  systemPrompt String    @default("You are a helpful assistant.")
+  modelId      String    @default("gpt-4")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  messages     Message[]
+  searchVector String?   @db.Text
+
+  @@index([userId, updatedAt])
+  @@index([searchVector], type: Gin)
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           String   // "user" | "assistant" | "system"
+  content        Json     // { text: string, metadata?: { tokenCount?: number } }
+  modelUsed      String?
+  tokenCount     Int?
+  createdAt      DateTime @default(now())
+
+  @@index([conversationId, createdAt])
+}
+
+model UsageRecord {
+  id           String   @id @default(cuid())
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  model        String
+  promptTokens Int
+  completionTokens Int
+  totalTokens  Int
+  costEstimate Float
+  createdAt    DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([model, createdAt])
+}
