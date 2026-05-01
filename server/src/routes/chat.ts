@@ -49,7 +49,7 @@ router.post('/stream', authMiddleware, async (req: AuthRequest, res) => {
     orderBy: { createdAt: 'asc' },
   });
 
-  const chatMessages = allMessages.map((m) => ({
+  const chatMessages = allMessages.map((m: { role: string; content: unknown }) => ({
     role: m.role as 'user' | 'assistant' | 'system',
     content: (m.content as any).text || '',
   }));

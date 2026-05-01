@@ -41,8 +41,8 @@ router.get('/', authMiddleware, async (req: AuthRequest, res) => {
     byModel[record.model].requestCount += 1;
   }
 
-  const totalTokens = records.reduce((sum, r) => sum + r.totalTokens, 0);
-  const totalCost = records.reduce((sum, r) => sum + r.costEstimate, 0);
+  const totalTokens = records.reduce((sum: number, r: { totalTokens: number }) => sum + r.totalTokens, 0);
+  const totalCost = records.reduce((sum: number, r: { costEstimate: number }) => sum + r.costEstimate, 0);
 
   res.json({
     summary: { totalTokens, totalCost, requestCount: records.length, range, days },

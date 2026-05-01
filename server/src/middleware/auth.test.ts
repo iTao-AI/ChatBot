@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import jwt from 'jsonwebtoken';
 import { authMiddleware, AuthRequest } from './auth';
 import { Request, Response } from 'express';

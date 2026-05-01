@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { redis, redisHealth } from './redis';
+import { redis, redisHealth } from '../redis';
 
 // In-memory fallback when Redis is unavailable
 const memoryStore: Map<string, { count: number; resetAt: number }> = new Map();

@@ -24,9 +24,9 @@ const REFRESH_COOKIE_OPTIONS: Partial<Response['cookie']> = {
 };
 
 function generateTokens(userId: string) {
-  const accessToken = jwt.sign({ userId }, ACCESS_SECRET, { expiresIn: ACCESS_EXPIRES_IN });
+  const accessToken = jwt.sign({ userId }, ACCESS_SECRET, { expiresIn: ACCESS_EXPIRES_IN } as jwt.SignOptions);
   const refreshToken = randomBytes(48).toString('hex');
-  const refreshJwt = jwt.sign({ userId, token: refreshToken }, REFRESH_SECRET, { expiresIn: REFRESH_EXPIRES_IN });
+  const refreshJwt = jwt.sign({ userId, token: refreshToken }, REFRESH_SECRET, { expiresIn: REFRESH_EXPIRES_IN } as jwt.SignOptions);
   return { accessToken, refreshToken, refreshJwt };
 }
 
