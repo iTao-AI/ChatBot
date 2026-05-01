@@ -39,15 +39,15 @@ export default function UsagePage() {
   }, [range, isAuthenticated]);
 
   if (!isAuthenticated) {
-    return <div className="min-h-screen flex items-center justify-center text-gray-400">Sign in to view usage.</div>;
+    return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-gray-400">Sign in to view usage.</div>;
   }
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-gray-400">Loading usage data...</div>;
+    return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-gray-400">Loading usage data...</div>;
   }
 
   if (error || !usage) {
-    return <div className="min-h-screen flex items-center justify-center text-red-400">{error ?? 'No data'}</div>;
+    return <div className="min-h-screen bg-gray-950 flex items-center justify-center text-red-400">{error ?? 'No data'}</div>;
   }
 
   return (

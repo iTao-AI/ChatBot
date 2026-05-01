@@ -12,9 +12,24 @@ export default function LoginPage() {
   const { login, isLoading } = useAuthStore();
   const router = useRouter();
 
+  const validate = (): string | null => {
+    if (!email.trim()) return 'Email is required';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return 'Please enter a valid email';
+    if (!password) return 'Password is required';
+    if (password.length < 8) return 'Password must be at least 8 characters';
+    return null;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     try {
       await login(email, password);
       router.push('/chat');
@@ -27,7 +42,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
       <div className="w-full max-w-md p-8">
         <h1 className="text-2xl font-bold mb-6 text-center">Sign in</h1>
-        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+        <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
             <div className="p-3 bg-red-900/50 border border-red-700 rounded-md text-red-300 text-sm" role="alert">
               {error}
@@ -42,7 +57,6 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
               autoComplete="email"
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:border-blue-500 focus:outline-none"
               aria-required="true"
@@ -57,8 +71,6 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
-              minLength={8}
               autoComplete="current-password"
               className="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md focus:border-blue-500 focus:outline-none"
               aria-required="true"
