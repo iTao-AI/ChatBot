@@ -8,8 +8,12 @@ The system SHALL provide an SSE endpoint that streams AI responses token by toke
 - **THEN** system connects the SSE stream and sends tokens incrementally until the response is complete
 
 #### Scenario: Stream with model selection
-- **WHEN** user sends a message specifying a model (e.g., "gpt-4")
+- **WHEN** user sends a message specifying a model (e.g., "deepseek-chat", "gpt-4o", "claude-sonnet-4")
 - **THEN** system routes to the correct AI provider and streams the response
+
+#### Scenario: Stream with DeepSeek (default)
+- **WHEN** user sends a message without specifying a model and DEEPSEEK_API_KEY is configured
+- **THEN** system routes to DeepSeek using OpenAI-compatible API and streams the response
 
 #### Scenario: Streaming error
 - **WHEN** the AI provider returns an error during streaming

@@ -19,9 +19,9 @@
 
 - `user-auth`: 用户注册、登录、JWT 鉴权、Session 管理
 - `conversation-management`: 创建/删除/重命名会话，会话列表持久化，消息历史检索
-- `ai-chat`: 核心对话能力，流式 SSE 响应，多轮上下文维护，多模型切换（GPT-4 / Claude / 其他）
+- `ai-chat`: 核心对话能力，流式 SSE 响应，多轮上下文维护，多模型切换（DeepSeek Chat / DeepSeek Reasoner / GPT-4o / Claude Sonnet）
 - `message-rendering`: 前端消息渲染，Markdown 解析，代码块语法高亮，LaTeX 数学公式支持
-- `model-management`: 后端模型配置、API Key 管理、供应商路由（OpenAI / Anthropic / 其他）
+- `model-management`: 后端模型配置、API Key 管理（AES-256 加密存储）、供应商路由（DeepSeek / OpenAI / Anthropic）
 - `rate-limiting`: 请求频率限制、配额管理、防滥用机制
 
 ### Modified Capabilities
@@ -30,8 +30,8 @@
 
 ## Impact
 
-- **前端**: 新建 React/Next.js 应用，包含聊天界面、用户中心、设置页面
-- **后端**: 新建 Node.js/Express 或 FastAPI 服务，包含认证、对话代理、流式 SSE 端点
-- **数据库**: 引入 PostgreSQL 或 SQLite 存储用户、会话、消息数据
-- **外部依赖**: OpenAI API / Anthropic API 等第三方 LLM 服务
-- **基础设施**: Redis（缓存/Rate Limiting），Nginx（反向代理），Docker（容器化部署）
+- **前端**: 新建 Next.js 16 应用，包含聊天界面、登录/注册、用量面板、设置页面
+- **后端**: 新建 Node.js + Express + TypeScript 服务，包含认证、对话代理、流式 SSE 端点
+- **数据库**: PostgreSQL 17 + Prisma ORM 存储用户、会话、消息、API 配置数据
+- **外部依赖**: DeepSeek API（默认）、OpenAI API、Anthropic API
+- **基础设施**: Redis（Rate Limiting），Nginx（反向代理），Docker Compose（容器化部署）

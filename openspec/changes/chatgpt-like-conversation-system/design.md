@@ -8,7 +8,7 @@
 - 提供完整的类 ChatGPT 用户体验：左侧会话列表 + 右侧聊天区域
 - 支持流式 SSE 输出，打字机效果逐字显示
 - 维护多轮对话上下文，自动管理 Token 窗口
-- 支持多种 AI 模型切换（GPT-4、Claude 等）
+- 支持多种 AI 模型切换（DeepSeek Chat（默认）、DeepSeek Reasoner、GPT-4o、Claude Sonnet 4）
 - 用户数据持久化，会话历史可检索
 - 安全的后端代理转发，不暴露 API Key 给前端
 - 可扩展的架构，方便接入新的 LLM 供应商
@@ -63,9 +63,11 @@
 
 ### 5. AI 模型接入: 统一抽象层 + 供应商适配器模式
 
-**决策**: 定义统一的 `ChatProvider` 接口，为每个 LLM 供应商实现适配器（OpenAI、Anthropic 等）。
+**决策**: 定义统一的 `ChatProvider` 接口，为每个 LLM 供应商实现适配器。DeepSeek 作为默认供应商，复用 OpenAI 适配器（因其 API 与 OpenAI 兼容），通过 baseURL 区分。API Key 优先从数据库 ApiConfig 表读取，环境变量作为后备。
 
-**理由**: 隔离供应商差异，新增供应商只需添加适配器；后端统一处理流式响应格式转换。
+**理由**: DeepSeek 成本低、中文支持好，适合作为默认模型。OpenAI 兼容接口减少适配器代码量。数据库 Key 支持运行时动态切换，无需重启服务。
+
+**数据模型**: `ApiConfig` 表（provider, apiKey 加密, baseUrl, isActive）
 
 ### 6. 认证: JWT (JSON Web Tokens)
 
@@ -98,12 +100,12 @@
 
 ## Migration Plan
 
-1. 开发阶段使用 SQLite，通过 Prisma 一键切换到 PostgreSQL
-2. Docker Compose 编排，本地 `docker compose up` 即可启动
+1. PostgreSQL 从一开始即使用，通过 `docker compose up` 启动
+2. Prisma migration 通过 `npx prisma migrate deploy` 应用
 3. 无存量数据迁移，首次部署即初始化 schema
+4. 环境变量通过 wrapper script (`server/dev.js`) 加载，避免 ES 模块导入提升导致 dotenv 晚加载的问题
 
 ## Open Questions
 
 - 是否需要支持对话导出（Markdown/PDF 格式）？—— MVP 后可加
-- 是否需要暗黑模式？—— 建议 MVP 包含
 - 计费/配额策略如何设计？—— 基础 Rate Limiting 先做，精细计量化后续
