@@ -2,6 +2,32 @@
 
 A ChatGPT-like conversation system built with Next.js and Express.
 
+## Architecture
+
+```
+┌──────────────────────────────────────────────┐
+│  Next.js Frontend (:3000)                    │
+│  Login / Chat / Settings / Usage Dashboard   │
+└──────────────────┬───────────────────────────┘
+                   │ HTTP / SSE
+┌──────────────────▼───────────────────────────┐
+│  Express Backend (:3001)                     │
+│  ┌─────────┐ ┌───────────┐ ┌──────────────┐  │
+│  │ Auth    │ │ Chat      │ │ Usage        │  │
+│  │ (JWT)   │ │ (SSE)     │ │ Analytics    │  │
+│  └─────────┘ └───────────┘ └──────────────┘  │
+│  ┌──────────────────────────────────────────┐  │
+│  │ Provider Adapters: DeepSeek / OpenAI /   │  │
+│  │ Anthropic with streaming SSE             │  │
+│  └──────────────────────────────────────────┘  │
+└──────────┬───────────────┬────────────────────┘
+           │               │
+    ┌──────▼──────┐ ┌──────▼──────┐
+    │ PostgreSQL  │ │    Redis    │
+    │ (Prisma ORM)│ │ (Rate Limit)│
+    └─────────────┘ └─────────────┘
+```
+
 ## Features
 
 - Multi-model AI chat (DeepSeek, GPT-4, Claude) with streaming SSE responses
