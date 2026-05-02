@@ -1,3 +1,5 @@
+[English](./README.md) | [中文](./README_zh.md)
+
 # ChatBot
 
 A ChatGPT-like conversation system built with Next.js and Express.

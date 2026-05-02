@@ -1,3 +1,5 @@
+[English](./README.md) | [中文](./README_zh.md)
+
 # ChatBot
 
 一个基于 Next.js 和 Express 的类 ChatGPT 对话系统。
